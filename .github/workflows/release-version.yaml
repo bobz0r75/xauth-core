@@ -68,4 +68,6 @@ jobs:
           prerelease: false
       - name: "Run maven build"
         run: mvn --batch-mode clean deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 ...
