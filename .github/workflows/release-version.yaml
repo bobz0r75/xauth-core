@@ -10,7 +10,7 @@ on:
       - "main"
 jobs:
   release-version:
-    runs-on: vcc-azure-ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
