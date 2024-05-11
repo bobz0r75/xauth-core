@@ -7,10 +7,17 @@
 
   <groupId>eu.xauth</groupId>
   <artifactId>xauth-core</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0</version>
 
   <name>xauth-core</name>
   <url>http://www.xauth.eu</url>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/bobz0r75/xauth-core</url>
+    </repository>
+  </distributionManagement>
 
   <properties>
     <java.version>17</java.version>
