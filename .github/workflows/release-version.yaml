@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/main/**'
       - 'pom.xml'
+      - '.github/workflows/**'
     branches:
       - "main"
 jobs:
