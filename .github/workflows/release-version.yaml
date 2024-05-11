@@ -49,9 +49,9 @@ jobs:
           fi
           echo NEW_TAG="$latestMajor.$latestMinor.$newPatch" >> "$GITHUB_ENV"
       - name: "Create tag"
-        run: git tag ${{ env.NEW_TAG }}
+        run: git tag ${{ env.NEW_TAG }}; git tag -f latest
       - name: "Push tag"
-        run: git push origin ${{ env.NEW_TAG }}
+        run: git push origin ${{ env.NEW_TAG }}; git push origin tag latest
       - name: "Set artifact version"
         run: |
           mvn --batch-mode \
