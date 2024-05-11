@@ -14,6 +14,7 @@ class ClaimantTest {
 
     var id = randomUUID();
     var name = randomString();
+    var description = randomString();
     var validFrom = randomLocalDate();
     var validTo = randomLocalDate();
 
@@ -21,6 +22,7 @@ class ClaimantTest {
         Claimant.builder()
             .id(id)
             .name(name)
+            .description(description)
             .validFrom(validFrom)
             .validTo(validTo)
             .parent(null)
@@ -28,6 +30,7 @@ class ClaimantTest {
 
     assertEquals(id, claimant.id());
     assertEquals(name, claimant.name());
+    assertEquals(description, claimant.description());
     assertEquals(validFrom, claimant.validFrom());
     assertEquals(validTo, claimant.validTo());
   }
