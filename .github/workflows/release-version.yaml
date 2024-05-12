@@ -38,16 +38,27 @@ jobs:
             | tail -n 1 \
             | sed 's/^v//')
           echo "Latest tag: $latest"
-          [ -n "$latest" ] || latest="0.0.0"
+          pomVersion=$(mvn -q -Dexec.executable=echo \
+            -Dexec.args='${project.version}' \
+            --non-recursive \
+            exec:exec)
+          echo "POM version: $pomVersion"
+          [ -n "$latest" ] || latest=$pomVersion
           latestMajor=$(echo -n "$latest" | cut -d '.' -f 1)
           latestMinor=$(echo -n "$latest" | cut -d '.' -f 2)
           latestPatch=$(echo -n "$latest" | cut -d '.' -f 3)
-          if [ -z "${latestPatch}" ]; then
-            newPatch=0
+          pomMajor=$(echo -n "$pomVersion" | cut -d '.' -f 1)
+          pomMinor=$(echo -n "$pomVersion" | cut -d '.' -f 2)
+          pomPatch=$(echo -n "$pomVersion" | cut -d '.' -f 3)
+          if [[ "$pomMajor" > "$latestMajor" ]] || [[ "$pomMinor" > "$latestMinor" ]]; then
+            newTag="$pomMajor.$pomMinor.$pomPatch"
           else
-            newPatch=$(echo "$latestPatch + 1" | bc)
+            if [ -z "${latestPatch}" ]; then patch=0;
+            else patch=$(echo "$latestPatch + 1" | bc);
+            fi
+            newTag="$latestMajor.$latestMinor.$patch"
           fi
-          echo NEW_TAG="$latestMajor.$latestMinor.$newPatch" >> "$GITHUB_ENV"
+          echo NEW_TAG="$newTag" >> "$GITHUB_ENV"
       - name: "Create tag"
         run: git tag ${{ env.NEW_TAG }}; git tag -f latest
       - name: "Push tag"

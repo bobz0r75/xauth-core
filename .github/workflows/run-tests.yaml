@@ -38,15 +38,6 @@ jobs:
                 "username": "bobz0r75",
                 "password": "${{ env.TOKEN }}"
             }]
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: java
-          build-mode: manual
       - name: Build with Maven
         run: |
-          mvn -B verify --file pom.xml
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:java"
+          mvn -B clean verify --file pom.xml
