@@ -38,10 +38,7 @@ jobs:
             | tail -n 1 \
             | sed 's/^v//')
           echo "Latest tag: $latest"
-          pomVersion=$(mvn -q -Dexec.executable=echo \
-            -Dexec.args='${project.version}' \
-            --non-recursive \
-            exec:exec)
+          pomVersion=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "POM version: $pomVersion"
           [ -n "$latest" ] || latest=$pomVersion
           latestMajor=$(echo -n "$latest" | cut -d '.' -f 1)
